@@ -9,8 +9,9 @@ import {
   addEdge,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-
 import CustomNode from '@/components/CustomNode';
+
+
 
 const initialNodes = [
   {
@@ -61,7 +62,7 @@ export default function Home() {
         <Controls />
       </ReactFlow>
     </div>
-  <CustomNode/>
+ <CustomNode/>
     </>
   );
 }

@@ -1,17 +1,23 @@
 "use client"
-
 import { useState, useCallback } from 'react';
-import { ReactFlow, Controls, Background , applyNodeChanges,
-  applyEdgeChanges,} from '@xyflow/react';
+import {
+  ReactFlow,
+  Controls,
+  Background,
+  applyNodeChanges,
+  applyEdgeChanges,
+  addEdge,
+} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-const edges = [{ id: '1-2', source: '1', target: '2',type:'step', label:'to the' }];
+import CustomNode from '@/components/CustomNode';
 
-const nodes = [
+const initialNodes = [
   {
     id: '1',
-    position: { x: 0, y: 0 },
     data: { label: 'Hello' },
+    position: { x: 0, y: 0 },
+    type: 'input',
   },
   {
     id: '2',
@@ -20,13 +26,43 @@ const nodes = [
   },
 ];
 
+const initialEdges = [];
+
 export default function Home() {
+  const [nodes, setNodes] = useState(initialNodes);
+  const [edges, setEdges] = useState(initialEdges);
+
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    [],
+  );
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [],
+  );
+
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    [],
+  );
+
   return (
-    <div style={{ height: '100vw' ,width:'100vh'}}>
-    <ReactFlow nodes={nodes} edges={edges}>
-      <Background />
-      <Controls />
-    </ReactFlow>
-  </div>
+    <>
+    <div style={{ height: '100vh', width:'100vw' }}>
+      <ReactFlow
+        nodes={nodes}
+        onNodesChange={onNodesChange}
+        edges={edges}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        fitView
+      >
+        <Background />
+        <Controls />
+      </ReactFlow>
+    </div>
+  <CustomNode/>
+    </>
   );
 }
+

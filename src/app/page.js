@@ -1,6 +1,8 @@
 "use client"
-import Image from "next/image";
-import { ReactFlow, Controls, Background } from '@xyflow/react';
+
+import { useState, useCallback } from 'react';
+import { ReactFlow, Controls, Background , applyNodeChanges,
+  applyEdgeChanges,} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 const edges = [{ id: '1-2', source: '1', target: '2',type:'step', label:'to the' }];
